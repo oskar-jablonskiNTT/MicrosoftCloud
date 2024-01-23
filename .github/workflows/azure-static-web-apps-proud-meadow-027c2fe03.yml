@@ -32,6 +32,9 @@ jobs:
           api_location: "/samples/acs-to-teams-meeting/server/typescript" # Api source code path - optional
           output_location: "build" # Built app content directory - optional
           ###### End of Repository/Build Configurations ######
+        env: # Add environment variables here
+            REACT_APP_ACS_USER_FUNCTION: https://proud-meadow-027c2fe03.4.azurestaticapps.net/api/httpTriggerAcsToken
+            REACT_APP_TEAMS_MEETING_FUNCTION: https://proud-meadow-027c2fe03.4.azurestaticapps.net/api/httpTriggerTeamsUrl
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
