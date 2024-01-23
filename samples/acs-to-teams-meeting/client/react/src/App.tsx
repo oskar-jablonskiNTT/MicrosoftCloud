@@ -13,6 +13,7 @@ const App = () => {
   const [token, setToken] = useState<string>('');
   const [teamsMeetingLink, setTeamsMeetingLink] = useState<string>('');
   const [message, setMessage] = useState<string>('');
+  
   const credential = useMemo(() => {
     if (token) {
       return new AzureCommunicationTokenCredential(token)
@@ -42,22 +43,24 @@ const App = () => {
       const user = await res.json();
       setUserId(user.userId);
       setToken(user.token);
+      console.log('ACS user created\nid: ' + user.userId + "\ntoken: " + user.token);
 
       setMessage('Getting Teams meeting link...');
-      //Call Azure Function to get the meeting link
+      //Call Azure Function to get the meeting linkds
       const resTeams = await fetch(process.env.REACT_APP_TEAMS_MEETING_FUNCTION as string);
       const link = await resTeams.text();
       setTeamsMeetingLink(link);
       setMessage('');
       console.log('Teams meeting link', link);
     }
+    
     init();
+    
   }, []);
 
   if (callAdapter) {
     return (
       <div>
-        <h1>Contact Customer Service</h1>
         <div className="wrapper">
           <CallComposite
             adapter={callAdapter}
